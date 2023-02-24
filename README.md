@@ -8,8 +8,8 @@
 
 Ссылка на проект: https://github.com/gear1995/movies-explorer-api;
 
-IP:  ;
+IP:  51.250.81.166;
 
-Frontend:  ;
+Frontend:  gear1995movies.nomoredomains.work;
 
-Backend:  ;
+Backend: api.gear1995movies.nomoredomains.work;

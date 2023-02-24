@@ -1,8 +1,8 @@
 const allowedCors = [
-  'https://gear1995v.nomoredomainsclub.ru',
-  'http://gear1995v.nomoredomainsclub.ru',
-  'https://api.gear1995v.students.nomoredomains.work',
-  'http://api.gear1995v.students.nomoredomains.work',
+  'https://gear1995movies.nomoredomains.work',
+  'http://gear1995movies.nomoredomains.work',
+  'https://api.gear1995movies.nomoredomains.work',
+  'http://api.gear1995movies.nomoredomains.work',
   'http://localhost:3000',
   'localhost:3000',
 ];

@@ -21,7 +21,7 @@ module.exports.login = (req, res, next) => {
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
-          domain: 'api.gear1995v.students.nomoredomains.work',
+          domain: 'api.gear1995movies.nomoredomains.work',
           secure: true,
           sameSite: 'none',
         })
