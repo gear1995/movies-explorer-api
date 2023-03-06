@@ -4,6 +4,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');
 const ConflictError = require('../errors/conflict-error');
+const { JWT_SECRET_DEV, JWT_STORAGE_TIME, SALT_LENGTH } = require('../utils/config');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -14,8 +15,8 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
-        { expiresIn: '7d' },
+        NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV,
+        { expiresIn: JWT_STORAGE_TIME },
       );
       res
         .cookie('jwt', token, {
@@ -48,7 +49,7 @@ module.exports.getCurrentUser = (req, res, next) => {
 
 module.exports.createUser = (req, res, next) => {
   // хешируем пароль
-  bcrypt.hash(req.body.password, 10)
+  bcrypt.hash(req.body.password, SALT_LENGTH)
     .then((hash) => User.create({
       name: req.body.name,
       email: req.body.email,
@@ -96,6 +97,12 @@ module.exports.updateProfile = (req, res, next) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         next(
           new BadRequestError('Переданы некорректные данные'),
+        );
+        return;
+      }
+      if (err.code === 11000) {
+        next(
+          new ConflictError('Пользователь с таким email уже существует'),
         );
         return;
       }

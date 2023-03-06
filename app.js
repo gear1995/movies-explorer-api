@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
@@ -12,21 +11,20 @@ const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, login, signout } = require('./contollers/users');
 const { validateLogin, validateCreateUser } = require('./middlewares/validator');
+const { PORT, DATABASE_URL } = require('./utils/config');
 const cors = require('./middlewares/cors');
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(DATABASE_URL, {
   useNewUrlParser: true,
 });
 
-const { PORT = 3000 } = process.env;
 const app = express();
+app.use(requestLogger);
 app.use(helmet());
 app.use(cors);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(requestLogger);
 
 /* app.get('/crash-test', () => {
   setTimeout(() => {
@@ -36,9 +34,10 @@ app.use(requestLogger);
 
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateCreateUser, createUser);
-app.post('/signout', signout);
 
 app.use(auth);
+
+app.post('/signout', signout);
 app.use('/users', userRouter);
 app.use('/movies', movieRouter);
 

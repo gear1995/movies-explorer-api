@@ -14,9 +14,9 @@ module.exports.validatePostMovie = celebrate({
     country: Joi.string().required(),
     director: Joi.string().required(),
     duration: Joi.number().required(),
-    year: Joi.number().required(),
+    year: Joi.string().required(),
     description: Joi.string().required(),
-    trailer: Joi.string().required().custom(validateUrl),
+    trailerLink: Joi.string().required().custom(validateUrl),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
     thumbnail: Joi.string().required().custom(validateUrl),
@@ -33,7 +33,7 @@ module.exports.validateLogin = celebrate({
 
 module.exports.validateCreateUser = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
