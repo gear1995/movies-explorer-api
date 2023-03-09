@@ -24,8 +24,8 @@ module.exports.postMovie = (req, res, next) => {
     thumbnail,
     movieId,
   } = req.body;
-  const { owner } = req.user._id;
 
+  const owner = req.user._id;
   Movie.create({
     country,
     director,

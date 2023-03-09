@@ -23,7 +23,7 @@ module.exports.login = (req, res, next) => {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
           domain: 'api.gear1995movies.nomoredomains.work',
-          secure: true,
+          secure: false,
           sameSite: 'none',
         })
         .send({ jwt: token });
