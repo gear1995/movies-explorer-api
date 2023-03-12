@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 function validateUrl(url) {
-  const regEx = /^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/gm;
+  const regEx = /https?:\/\/(www\.)?[a-zA-Z\d\-.]{1,}\.[a-z]{1,6}([/a-z0-9\-._~:?#[\]@!$&'()*+,;=]*)/;
 
   if (regEx.test(url)) {
     return url;
@@ -22,7 +22,7 @@ const ALLOWED_CORS = [
 
 const {
   PORT = 3000,
-  JWT_SECRET_DEV = 'secretkey',
+  JWT_SECRET_DEV = 'some-secret-key',
   DATABASE_URL = 'mongodb://localhost:27017/bitfilmsdb',
 } = process.env;
 

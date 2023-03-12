@@ -22,7 +22,7 @@ module.exports.login = (req, res, next) => {
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
-          domain: 'api.gear1995movies.nomoredomains.work',
+          domain: 'http://localhost:3000',
           secure: true,
           sameSite: 'none',
         })

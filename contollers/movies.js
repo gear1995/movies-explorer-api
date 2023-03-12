@@ -4,11 +4,16 @@ const BadRequestError = require('../errors/bad-request-error');
 const ForbiddenError = require('../errors/forbidden-error');
 
 module.exports.getMovies = (req, res, next) => {
-  const { owner } = req.user._id;
-  Movie.findById(owner)
+  const owner = req.user._id;
+  Movie.find({ owner })
     .then((movies) => res.send(movies))
     .catch(next);
 };
+
+/*   Movie.findById({ owner: req.user._id })
+    .then((movies) => res.send(movies))
+    .catch(next);
+}; */
 
 module.exports.postMovie = (req, res, next) => {
   const {
@@ -18,14 +23,14 @@ module.exports.postMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailerlink,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
     movieId,
   } = req.body;
-  const { owner } = req.user._id;
 
+  const owner = req.user._id;
   Movie.create({
     country,
     director,
@@ -33,7 +38,7 @@ module.exports.postMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailerlink,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
@@ -64,7 +69,7 @@ module.exports.deleteMovie = (req, res, next) => {
       }
       return Movie.remove(movie);
     })
-    .then(() => res.status(200).send({ message: 'Успешно' }))
+    .then(() => res.status(200).send({ message: 'Вы успешно удалили фильм' }))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(
